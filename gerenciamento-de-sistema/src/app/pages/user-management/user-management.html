@@ -1,0 +1,70 @@
+<div class="crud-container">
+    <h2>Gerenciar Usuários</h2>
+  
+    <form (ngSubmit)="salvar()" class="form-box">
+      <input [(ngModel)]="novoUsuario.nome" name="nome" placeholder="Nome" required>
+      <input [(ngModel)]="novoUsuario.email" name="email" placeholder="E-mail" required>
+      <input type="password" [(ngModel)]="novoUsuario.senha" name="senha" placeholder="Senha" required>
+  
+      <button type="submit">Adicionar</button>
+    </form>
+  
+    <table class="table">
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Ações</th>
+      </tr>
+  
+      <tr *ngFor="let u of usuarios">
+        <td>
+            @if(editando?.id !== u.id){
+                <span>{{ u.nome }}</span>
+            }
+          <input *ngIf="editando?.id === u.id" [(ngModel)]="editando!.nome">
+        </td>
+  
+        <td>{{ u.email }}</td>
+  
+        <td class="actions">
+          <button *ngIf="editando?.id !== u.id" (click)="selecionarEdicao(u)">Editar</button>
+          <button *ngIf="editando?.id !== u.id && u.id" class="btn-danger" (click)="excluir(u.id!)">Excluir</button>
+          <button *ngIf="editando?.id === u.id" (click)="atualizar()">Salvar</button>
+          <button *ngIf="editando?.id === u.id" class="btn-danger" (click)="cancelar()">Cancelar</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+
+<!-- <div class="crud-container">
+    <h2>Gerenciar Usuários</h2>
+  
+
+    <form (ngSubmit)="salvar()">
+      <input [(ngModel)]="novoUsuario.nome" name="nome" placeholder="Nome" required>
+      <input [(ngModel)]="novoUsuario.email" name="email" placeholder="E-mail" required>
+      <input [(ngModel)]="novoUsuario.senha" name="senha" placeholder="Senha" required>
+  
+      <button class="btn-add" type="submit">Adicionar</button>
+    </form>
+  
+
+    <table>
+      <tr *ngFor="let u of usuarios">
+        <td>
+          <span *ngIf="editando?.id !== u.id">{{ u.nome }}</span>
+          <input *ngIf="editando?.id === u.id" [(ngModel)]="editando!.nome">
+        </td>
+        <td>{{ u.email }}</td>
+        <td class="actions">
+          <button *ngIf="editando?.id !== u.id" class="btn-edit" (click)="selecionarEdicao(u)">Editar</button>
+          <button *ngIf="editando?.id !== u.id" class="btn-delete" (click)="excluir(u.id!)">Excluir</button>
+  
+          <button *ngIf="editando?.id === u.id" class="btn-edit" (click)="atualizar()">Salvar</button>
+          <button *ngIf="editando?.id === u.id" class="btn-delete" (click)="editando = null">Cancelar</button>
+        </td>
+      </tr>
+    </table>
+  </div> -->

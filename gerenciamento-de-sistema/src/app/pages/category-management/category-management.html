@@ -1,0 +1,74 @@
+<div class="crud-container">
+    <h2>Gerenciar Categorias</h2>
+  
+    <!-- Cadastro -->
+    <div class="form-box">
+      <input [(ngModel)]="novaCategoria.nome" placeholder="Nome da categoria">
+      <button (click)="salvar()">Adicionar</button>
+    </div>
+  
+    <!-- Lista -->
+    <table class="table">
+      <tr>
+        <th>Nome</th>
+        <th>Ações</th>
+      </tr>
+  
+      <tr *ngFor="let c of categorias">
+        <td *ngIf="editando?.id !== c.id">{{ c.nome }}</td>
+        <td *ngIf="editando?.id === c.id">
+          <input [(ngModel)]="editando!.nome">
+        </td>
+  
+        <td class="actions">
+          <button *ngIf="editando?.id !== c.id" (click)="selecionarEdicao(c)">Editar</button>
+          <button *ngIf="editando?.id !== c.id" class="btn-danger" (click)="excluir(c.id!)">Excluir</button>
+  
+          <button *ngIf="editando?.id === c.id" (click)="atualizar()">Salvar</button>
+          <button *ngIf="editando?.id === c.id" class="btn-danger" (click)="cancelar()">Cancelar</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="crud-container">
+<h2>Gerenciar Categorias</h2>
+
+<div>
+  <input [(ngModel)]="novaCategoria.nome" placeholder="Nome da categoria">
+  <button (click)="salvar()">Adicionar</button>
+</div>
+
+<hr>
+
+<ul>
+    @for (c of categorias; track c.id) {
+        <li >
+            <span>{{ c.nome }}</span>
+            <button (click)="selecionarEdicao(c)">Editar</button>
+            <button (click)="excluir(c.id!)">Excluir</button>
+        </li>
+    }
+</ul>
+
+@if(editando) {
+    <div *ngIf="editando">
+    <h3>Editar Categoria</h3>
+    <input [(ngModel)]="editando.nome">
+    <button (click)="atualizar()">Salvar Alterações</button>
+    </div>
+}
+</div> -->

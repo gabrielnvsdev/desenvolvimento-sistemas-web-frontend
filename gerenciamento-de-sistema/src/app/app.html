@@ -1,0 +1,14 @@
+@if(authService.isAuthenticated()){
+  <nav>
+    <a routerLink="/categorias">Categorias</a>
+    <a routerLink="/produtos">Produtos</a>
+    <a routerLink="/usuarios">Usuários</a>
+    @if(usuarioLogado){
+      <div class="logout">
+        <h3>Olá, {{ usuarioLogado.nome }}</h3>
+        <a (click)="logout()">Sair</a>
+      </div>
+    }
+  </nav>
+}
+<router-outlet></router-outlet>

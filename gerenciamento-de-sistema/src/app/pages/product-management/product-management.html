@@ -1,0 +1,87 @@
+<div class="crud-container">
+    <h2>Gerenciar Produtos</h2>
+  
+    <form (ngSubmit)="salvar()" class="form-box">
+      <input [(ngModel)]="novoProduto.nome" name="nome" placeholder="Nome" required>
+      <input [(ngModel)]="novoProduto.preco" name="preco" placeholder="Preço" required>
+      <input type=number [(ngModel)]="novoProduto.estoque" name="Estoque" required>
+  
+      <button type="submit">Adicionar</button>
+    </form>
+  
+    <table class="table">
+      <tr>
+        <th>Produto</th>
+        <th>Preço</th>
+        <th>Estoque</th>
+        <th>Ações</th>
+      </tr>
+  
+      <tr *ngFor="let p of produtos">
+        <td *ngIf="editando?.id !== p.id">{{ p.nome }}</td>
+        <td *ngIf="editando?.id === p.id">
+          <input [(ngModel)]="editando!.nome">
+        </td>
+  
+        <td *ngIf="editando?.id !== p.id">{{ p.preco | currency:'BRL' }}</td>
+        <td *ngIf="editando?.id === p.id">
+          <input type="number" [(ngModel)]="editando!.preco">
+        </td>
+
+        <td *ngIf="editando?.id !== p.id">{{ p.estoque }}</td>
+        <td *ngIf="editando?.id === p.id">
+          <input type="number" [(ngModel)]="editando!.preco">
+        </td>
+  
+        <td class="actions">
+          <button *ngIf="editando?.id !== p.id" (click)="selecionarEdicao(p)">Editar</button>
+          <button *ngIf="editando?.id !== p.id && p.id" class="btn-danger" (click)="excluir(p.id!)">Excluir</button>
+
+  
+          <button *ngIf="editando?.id === p.id" (click)="atualizar()">Salvar</button>
+          <button *ngIf="editando?.id === p.id" class="btn-danger" (click)="cancelar()">Cancelar</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+
+
+
+<!-- <div class="crud-container">
+    <h2>Gerenciar Produtos</h2>
+  
+    <form (ngSubmit)="salvar()">
+      <input [(ngModel)]="novoProduto.nome" name="nome" placeholder="Nome do Produto" required>
+      <input type="number" [(ngModel)]="novoProduto.preco" name="preco" placeholder="Preço" required>
+  
+      <select [(ngModel)]="novoProduto.categoriaId" name="categoriaId" required>
+        <option *ngFor="let c of categorias" [value]="c.id">{{ c.nome }}</option>
+      </select>
+  
+      <button class="btn-add" type="submit">Adicionar</button>
+    </form>
+  
+    <table>
+      <tr *ngFor="let p of produtos">
+        <td *ngIf="editando?.id !== p.id">{{ p.nome }}</td>
+        <td *ngIf="editando?.id === p.id">
+          <input [(ngModel)]="editando!.nome">
+        </td>
+
+        <td *ngIf="editando?.id !== p.id">{{ p.preco }}</td>
+        <td *ngIf="editando?.id === p.id">
+          <input type="number" [(ngModel)]="editando!.preco">
+        </td>
+  
+        <td class="actions">
+          <button *ngIf="editando?.id !== p.id" class="btn-edit" (click)="selecionarEdicao(p)">Editar</button>
+          <button *ngIf="editando?.id !== p.id" class="btn-delete" (click)="excluir(p.id!)">Excluir</button>
+  
+          <button *ngIf="editando?.id === p.id" class="btn-edit" (click)="atualizar()">Salvar</button>
+          <button *ngIf="editando?.id === p.id" class="btn-delete" (click)="editando=null">Cancelar</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+   -->
