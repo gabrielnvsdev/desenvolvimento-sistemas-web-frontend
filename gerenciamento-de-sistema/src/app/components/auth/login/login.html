@@ -1,0 +1,20 @@
+<div class="auth-container">
+  <h2>Login</h2>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input [(ngModel)]="email" type="email" required />
+  </div>
+
+  <div class="form-group">
+    <label>Senha</label>
+    <input [(ngModel)]="senha" type="password" required />
+  </div>
+
+  <button (click)="logar()">Entrar</button>
+  <button class="secondary-btn" (click)="cadastrar()">Criar Conta</button>
+
+  @if(errorMessage){
+    <p class="error" *ngIf="">{{ errorMessage }}</p>
+  }
+</div>
