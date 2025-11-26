@@ -3,9 +3,13 @@
 
   <div class="form-group">
     <label>Nome</label>
-    
     <input placeholder="Nome" [(ngModel)]="usuario.nome" name="nome" required>
+  </div>
 
+  <div class="form-group">
+    <label>CPF:</label>
+    <input type="text" [(ngModel)]="usuario.cpf" (input)="formatarCPF()" placeholder="000.000.000-00" maxlength="11" />
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </div>
 
   <div class="form-group">
@@ -21,6 +25,6 @@
   <button type="submit" (click)="cadastrar()">Registrar</button>
   <button class="secondary-btn" (click)="logar()">Voltar ao login</button>
   @if(errorMessage){
-    <p class="error" *ngIf="">{{ errorMessage }}</p>
+    <p class="error" >{{ errorMessage }}</p>
   }
 </div>

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class UserManagement implements OnInit {
 
   usuarios: Usuario[] = [];
-  novoUsuario: Usuario = { nome: '', email: '', senha: '' };
+  novoUsuario: Usuario = { nome: '',cpf:'', email: '', senha: '' };
   editando: Usuario | null = null;
 
   constructor(private usuarioService: UserService) {}
@@ -26,8 +26,14 @@ export class UserManagement implements OnInit {
   }
 
   salvar() {
-    this.usuarioService.criar(this.novoUsuario).subscribe(() => {
-      this.novoUsuario = { nome: '', email: '', senha: '' };
+
+    const usuarioParaEnviar = {
+      ...this.novoUsuario,
+      cpf: this.novoUsuario.cpf.replace(/\D/g, "") // REMOVE MÁSCARA AQUI
+    };
+
+    this.usuarioService.criar(usuarioParaEnviar).subscribe(() => {
+      this.novoUsuario = { nome: '', cpf: '', email: '', senha: '' };
       this.loadUsuarios();
     });
   }
@@ -38,7 +44,13 @@ export class UserManagement implements OnInit {
 
   atualizar() {
     if (!this.editando) return;
-    this.usuarioService.atualizar(this.editando.id!, this.editando)
+
+    const usuarioParaEnviar = {
+      ...this.editando,
+      cpf: this.editando.cpf.replace(/\D/g, "")
+    };
+
+    this.usuarioService.atualizar(this.editando.id!, usuarioParaEnviar)
       .subscribe(() => {
         this.editando = null;
         this.loadUsuarios();
@@ -52,4 +64,27 @@ export class UserManagement implements OnInit {
   cancelar() {
     this.editando = null;
   }
+
+  aplicarMascaraCPF(event: any) {
+    let cpf = event.target.value.replace(/\D/g, "");
+
+    if (cpf.length > 11) cpf = cpf.slice(0, 11);
+
+    if (cpf.length <= 3) {
+      event.target.value = cpf;
+    } else if (cpf.length <= 6) {
+      event.target.value = cpf.replace(/(\d{3})(\d+)/, "$1.$2");
+    } else if (cpf.length <= 9) {
+      event.target.value = cpf.replace(/(\d{3})(\d{3})(\d+)/, "$1.$2.$3");
+    } else {
+      event.target.value = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, "$1.$2.$3-$4");
+    }
+
+    if (!this.editando) {
+      this.novoUsuario.cpf = event.target.value;
+    } else {
+      this.editando.cpf = event.target.value;
+    }
+  }
+
 }
